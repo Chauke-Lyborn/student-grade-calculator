@@ -2,31 +2,26 @@ package com.vut.calculator;
 
 /**
  * VUT Student Grade Calculator
- * 
+ *
  * This class calculates student grades based on semester marks and exam marks.
- * 
- * ===== GRADING RULES (as per VUT policy) =====
- * Final Mark = (Semester Mark * 0.4) + (Exam Mark * 0.6)
- * 
- * Grade Boundaries:
- *   80-100  -> Distinction
- *   70-79   -> Merit
- *   60-69   -> Credit
- *   50-59   -> Pass
- *   0-49    -> Fail
- * 
+ *
+ * ===== GRADING RULES (as per VUT policy) ===== Final Mark = (Semester Mark *
+ * 0.4) + (Exam Mark * 0.6)
+ *
+ * Grade Boundaries: 80-100 -> Distinction 70-79 -> Merit 60-69 -> Credit 50-59
+ * -> Pass 0-49 -> Fail
+ *
  * A student needs a semester mark of at least 40 to gain exam admission.
  * ==============================================
- * 
+ *
  * WARNING: This application contains LOGIC ERRORS that need to be identified
- *          and fixed through a proper CI/CD pipeline with unit testing.
+ * and fixed through a proper CI/CD pipeline with unit testing.
  */
 public class GradeCalculator {
 
     /**
-     * BUG #1: Weight calculation is swapped
-     * Semester mark should be 40% and exam should be 60%,
-     * but the weights are reversed here.
+     * BUG #1: Weight calculation is swapped Semester mark should be 40% and
+     * exam should be 60%, but the weights are reversed here.
      */
     public double calculateFinalMark(double semesterMark, double examMark) {
         double finalMark = (semesterMark * 0.4) + (examMark * 0.6);
@@ -34,9 +29,8 @@ public class GradeCalculator {
     }
 
     /**
-     * BUG #2: Grade boundaries are incorrect
-     * - Distinction should be >= 80, but uses > 80 (misses exactly 80)
-     * - Pass boundary uses >= 55 instead of >= 50
+     * BUG #2: Grade boundaries are incorrect - Distinction should be >= 80, but
+     * uses > 80 (misses exactly 80) - Pass boundary uses >= 55 instead of >= 50
      * - Merit and Credit boundaries are also shifted
      */
     public String determineGrade(double finalMark) {
@@ -54,16 +48,16 @@ public class GradeCalculator {
     }
 
     /**
-     * BUG #3: Admission check uses wrong threshold
-     * Should require >= 40 for exam admission, but uses >= 45
+     * BUG #3: Admission check uses wrong threshold Should require >= 40 for
+     * exam admission, but uses >= 45
      */
     public boolean hasExamAdmission(double semesterMark) {
         return semesterMark >= 40;
     }
 
     /**
-     * BUG #4: Average calculation has off-by-one error
-     * Divides by (marks.length + 1) instead of marks.length
+     * BUG #4: Average calculation has off-by-one error Divides by (marks.length
+     * + 1) instead of marks.length
      */
     public double calculateClassAverage(double[] marks) {
         if (marks == null || marks.length == 0) {
@@ -77,8 +71,8 @@ public class GradeCalculator {
     }
 
     /**
-     * BUG #5: Pass rate calculation divides by total instead of multiplying by 100
-     * Also uses wrong threshold (>= 55 instead of >= 50)
+     * BUG #5: Pass rate calculation divides by total instead of multiplying by
+     * 100 Also uses wrong threshold (>= 55 instead of >= 50)
      */
     public double calculatePassRate(double[] finalMarks) {
         if (finalMarks == null || finalMarks.length == 0) {
@@ -86,16 +80,16 @@ public class GradeCalculator {
         }
         int passCount = 0;
         for (double mark : finalMarks) {
-            if (mark >= 55) {
+            if (mark >= 50) {
                 passCount++;
             }
         }
-        return Math.round(((double) passCount / finalMarks.length) * 100.0) / 100.0;
+        return (double) passCount / finalMarks.length;
     }
 
     /**
-     * BUG #6: Highest mark finder returns lowest instead
-     * Uses < comparison instead of >
+     * BUG #6: Highest mark finder returns lowest instead Uses < comparison instead of
+     * >
      */
     public double findHighestMark(double[] marks) {
         if (marks == null || marks.length == 0) {
@@ -111,27 +105,25 @@ public class GradeCalculator {
     }
 
     /**
-     * BUG #7: Supplementary exam eligibility check is wrong
-     * A student qualifies for a supplementary if their final mark is 
-     * between 45 and 49 (inclusive), but this method checks 40-44
+     * BUG #7: Supplementary exam eligibility check is wrong A student qualifies
+     * for a supplementary if their final mark is between 45 and 49 (inclusive),
+     * but this method checks 40-44
      */
     public boolean qualifiesForSupplementary(double finalMark) {
         return finalMark >= 45 && finalMark <= 49;
     }
 
     /**
-     * BUG #8: Mark validation allows marks over 100 and below 0
-     * Should return false for marks < 0 or > 100
-     * Currently returns true for any value
+     * BUG #8: Mark validation allows marks over 100 and below 0 Should return
+     * false for marks < 0 or > 100 Currently returns true for any value
      */
     public boolean isValidMark(double mark) {
         return mark >= 0 && mark <= 100;
     }
 
     /**
-     * Returns a formatted student report string
-     * Contains BUG #9: Report shows "ADMITTED" even when student is NOT admitted
-     * (the condition is inverted)
+     * Returns a formatted student report string Contains BUG #9: Report shows
+     * "ADMITTED" even when student is NOT admitted (the condition is inverted)
      */
     public String generateStudentReport(String studentName, double semesterMark, double examMark) {
         StringBuilder report = new StringBuilder();

@@ -40,13 +40,13 @@ public class GradeCalculator {
      * - Merit and Credit boundaries are also shifted
      */
     public String determineGrade(double finalMark) {
-        if (finalMark > 80) {
+        if (finalMark >= 80) {
             return "Distinction";
-        } else if (finalMark >= 75) {
+        } else if (finalMark >= 70) {
             return "Merit";
-        } else if (finalMark >= 65) {
+        } else if (finalMark >= 60) {
             return "Credit";
-        } else if (finalMark >= 55) {
+        } else if (finalMark >= 50) {
             return "Pass";
         } else {
             return "Fail";

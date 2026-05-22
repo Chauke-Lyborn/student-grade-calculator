@@ -1,25 +1,25 @@
 package com.vut.calculator;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Unit tests for the GradeCalculator class.
- * 
- * INSTRUCTIONS FOR STUDENTS:
- * --------------------------
- * Some tests have been written for you. Run them — they will FAIL because
- * the GradeCalculator code contains logic errors.
- * 
- * Your tasks:
- *   1. Run these tests and observe which ones fail.
- *   2. Complete the TODO tests (marked below).
- *   3. Identify and fix the bugs in GradeCalculator.java so all tests pass.
- *   4. Integrate these tests into your Jenkins CI/CD pipeline.
  *
- * DO NOT modify the expected values in the tests — the tests are CORRECT.
- * The bugs are in GradeCalculator.java.
+ * INSTRUCTIONS FOR STUDENTS: -------------------------- Some tests have been
+ * written for you. Run them — they will FAIL because the GradeCalculator code
+ * contains logic errors.
+ *
+ * Your tasks: 1. Run these tests and observe which ones fail. 2. Complete the
+ * TODO tests (marked below). 3. Identify and fix the bugs in
+ * GradeCalculator.java so all tests pass. 4. Integrate these tests into your
+ * Jenkins CI/CD pipeline.
+ *
+ * DO NOT modify the expected values in the tests — the tests are CORRECT. The
+ * bugs are in GradeCalculator.java.
  */
 public class GradeCalculatorTest {
 
@@ -34,7 +34,6 @@ public class GradeCalculatorTest {
     // TEST GROUP 1: Final Mark Calculation
     // Rule: Final Mark = (Semester Mark × 0.4) + (Exam Mark × 0.6)
     // =====================================================================
-
     @Test
     public void testFinalMarkCalculation_StandardCase() {
         // Semester=60, Exam=70 → (60*0.4)+(70*0.6) = 24+42 = 66.0
@@ -57,7 +56,6 @@ public class GradeCalculatorTest {
     // TEST GROUP 2: Grade Determination
     // 80-100=Distinction, 70-79=Merit, 60-69=Credit, 50-59=Pass, 0-49=Fail
     // =====================================================================
-
     @Test
     public void testGrade_Distinction() {
         assertEquals("Distinction", calculator.determineGrade(85));
@@ -114,7 +112,6 @@ public class GradeCalculatorTest {
     // TEST GROUP 3: Exam Admission
     // Minimum semester mark of 40 required
     // =====================================================================
-
     @Test
     public void testExamAdmission_Admitted() {
         assertTrue(calculator.hasExamAdmission(50));
@@ -135,14 +132,13 @@ public class GradeCalculatorTest {
     // (between the buggy threshold of 45 and correct threshold of 40)
     @Test
     public void testExamAdmission_Between40And45() {
-        // YOUR CODE HERE
-        fail("TODO: Implement this test");
+        // Corrected code
+        assertTrue(calculator.hasExamAdmission(42));
     }
 
     // =====================================================================
     // TEST GROUP 4: Class Average Calculation
     // =====================================================================
-
     @Test
     public void testClassAverage_Normal() {
         double[] marks = {60, 70, 80};
@@ -167,14 +163,15 @@ public class GradeCalculatorTest {
     public void testClassAverage_FiveStudents() {
         // YOUR CODE HERE — use marks: 45, 55, 65, 75, 85
         // Expected average: 65.0
-        fail("TODO: Implement this test");
+        //correct code
+        double[] marks = {45, 55, 65, 75, 85};
+        assertEquals(65.0, calculator.calculateClassAverage(marks), 0.01);
     }
 
     // =====================================================================
     // TEST GROUP 5: Pass Rate Calculation
     // Pass = final mark >= 50
     // =====================================================================
-
     @Test
     public void testPassRate_AllPass() {
         double[] marks = {60, 70, 80, 90};
@@ -193,14 +190,14 @@ public class GradeCalculatorTest {
     // TODO: Write a test for pass rate where no students pass
     @Test
     public void testPassRate_NonePass() {
-        // YOUR CODE HERE
-        fail("TODO: Implement this test");
+        //correct code
+        double[] marks = {20, 30, 45, 49};
+        assertEquals(0.0, calculator.calculatePassRate(marks), 0.01);
     }
 
     // =====================================================================
     // TEST GROUP 6: Highest Mark Finder
     // =====================================================================
-
     @Test
     public void testHighestMark_Normal() {
         double[] marks = {55, 78, 62, 91, 45};
@@ -216,15 +213,15 @@ public class GradeCalculatorTest {
     // TODO: Write a test where highest mark is at the beginning of the array
     @Test
     public void testHighestMark_FirstElement() {
-        // YOUR CODE HERE
-        fail("TODO: Implement this test");
+        // correct code
+        double[] marks = {95, 60, 72, 55};
+        assertEquals(95.0, calculator.findHighestMark(marks), 0.01);
     }
 
     // =====================================================================
     // TEST GROUP 7: Supplementary Exam Eligibility
     // Eligible if final mark is between 45 and 49 (inclusive)
     // =====================================================================
-
     @Test
     public void testSupplementary_Eligible() {
         assertTrue(calculator.qualifiesForSupplementary(47));
@@ -254,7 +251,6 @@ public class GradeCalculatorTest {
     // TEST GROUP 8: Mark Validation
     // Valid marks are between 0 and 100 inclusive
     // =====================================================================
-
     @Test
     public void testValidMark_InRange() {
         assertTrue(calculator.isValidMark(50));
@@ -283,7 +279,7 @@ public class GradeCalculatorTest {
     // TODO: Write a test for mark value of 105 (should be invalid)
     @Test
     public void testValidMark_WayOver100() {
-        // YOUR CODE HERE
-        fail("TODO: Implement this test");
+        // correct code
+        assertFalse(calculator.isValidMark(105));
     }
 }
